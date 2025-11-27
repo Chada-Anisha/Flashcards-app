@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Quiz App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-container">
+            <h1 class="welcome-title">📚 Flashcard Quiz App</h1>
+            <p class="welcome-subtitle">Transform your PDFs into interactive study materials</p>
+            <button id="start-btn" class="btn-primary">Get Started</button>
+        </div>
+    </div>
+
+    <!-- Upload Screen -->
+    <div id="upload-screen" class="screen">
+        <div class="container">
+            <h2 class="page-title">Upload Your PDF</h2>
+            <div class="upload-section">
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">📄</div>
+                    <p class="upload-text">Drag and drop your PDF here</p>
+                    <p class="upload-text-small">or</p>
+                    <input type="file" id="pdf-input" accept=".pdf" hidden>
+                    <button id="browse-btn" class="btn-secondary">Browse Files</button>
+                </div>
+                <div id="upload-progress" class="upload-progress hidden">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">Processing PDF...</p>
+                </div>
+            </div>
+            <div id="file-info" class="file-info hidden"></div>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+        <div class="container">
+            <div class="quiz-header">
+                <div class="quiz-stats">
+                    <span class="stat-item">Card <span id="current-card">1</span> of <span id="total-cards">0</span></span>
+                    <span class="stat-item">Time: <span id="quiz-timer">00:00</span></span>
+                </div>
+                <button id="view-progress-btn" class="btn-secondary">View Progress</button>
+            </div>
+            
+            <div class="flashcard-container">
+                <button id="prev-btn" class="nav-btn" disabled>← Previous</button>
+                
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" id="flashcard">
+                        <div class="flashcard-inner" id="flashcard-inner">
+                            <div class="flashcard-front">
+                                <div class="card-content">
+                                    <h3 class="card-label">Question</h3>
+                                    <p class="card-text" id="question-text">Loading...</p>
+                                </div>
+                            </div>
+                            <div class="flashcard-back">
+                                <div class="card-content">
+                                    <h3 class="card-label">Answer</h3>
+                                    <p class="card-text" id="answer-text">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="next-btn" class="nav-btn">Next →</button>
+            </div>
+
+            <div class="quiz-controls">
+                <button id="reveal-btn" class="btn-primary">Reveal Answer</button>
+                <button id="correct-btn" class="btn-success hidden">I Got It Right</button>
+                <button id="incorrect-btn" class="btn-danger hidden">I Got It Wrong</button>
+            </div>
+
+            <div class="card-indicators" id="card-indicators"></div>
+        </div>
+    </div>
+
+    <!-- Progress Screen -->
+    <div id="progress-screen" class="screen">
+        <div class="container">
+            <h2 class="page-title">Your Study Progress</h2>
+            
+            <div class="progress-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value" id="total-time">00:00</div>
+                    <div class="stat-label">Total Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="avg-time">00:00</div>
+                    <div class="stat-label">Avg Time/Question</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="correct-count">0</div>
+                    <div class="stat-label">Correct Answers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value" id="incorrect-count">0</div>
+                    <div class="stat-label">Incorrect Answers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value" id="accuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="cards-reviewed">0</div>
+                    <div class="stat-label">Cards Reviewed</div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">Time Per Question</h3>
+                    <canvas id="time-chart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">Performance Overview</h3>
+                    <canvas id="performance-chart"></canvas>
+                </div>
+            </div>
+
+            <div class="progress-actions">
+                <button id="back-to-quiz-btn" class="btn-primary">Continue Quiz</button>
+                <button id="new-session-btn" class="btn-secondary">New Session</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
